@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { ChevronRight, Rocket, Video, Music, BookOpen, Search, Star, Orbit, Globe, Zap, Sun, Moon } from 'lucide-react'
+import { ChevronDown, Rocket, Video, Music, BookOpen, Search, Star, Orbit, Globe, Zap, Sun, Moon } from 'lucide-react'
 
 interface ContentItem {
   id: string
