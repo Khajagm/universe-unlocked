@@ -1,12 +1,12 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Play, Pause, SkipBack } from 'lucide-react'
+import { ArrowLeft, Play, Pause, SkipBack, Sun, Moon } from 'lucide-react'
+import { Switch } from "@/components/ui/switch"
 import { Slider } from "@/components/ui/slider"
-import { Header } from "@/components/Header"
-import { Footer } from "@/components/Footer"
 
 const useTheme = () => {
   const [isDarkMode, setIsDarkMode] = useState(false)
@@ -120,13 +120,30 @@ const VideoPlayer = () => {
   )
 }
 
-export function BlockPage() {
+export default function CatsEyeNebulaSonification() {
   const { isDarkMode, toggleTheme } = useTheme()
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
       <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
-        <Header isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+        <header className="px-4 lg:px-6 h-14 flex items-center justify-between border-b border-gray-200 dark:border-gray-700">
+          <Link href="/explore/cats-eye-nebula" className="flex items-center text-purple-600 dark:text-purple-400">
+            <ArrowLeft className="h-6 w-6 mr-2" />
+            <span className="font-bold">Back to Cat's Eye Nebula</span>
+          </Link>
+          <div className="flex items-center space-x-2">
+            <Switch 
+              checked={isDarkMode} 
+              onCheckedChange={toggleTheme}
+              aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+            />
+            {isDarkMode ? (
+              <Moon className="h-4 w-4 text-purple-400" />
+            ) : (
+              <Sun className="h-4 w-4 text-purple-600" />
+            )}
+          </div>
+        </header>
         <main className="flex-1">
           <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
             <div className="container px-4 md:px-6">
@@ -162,7 +179,19 @@ export function BlockPage() {
             </div>
           </section>
         </main>
-        <Footer />
+        <footer className="py-6 w-full border-t border-gray-200 dark:border-gray-700">
+          <div className="container px-4 md:px-6 flex flex-col sm:flex-row justify-between items-center">
+            <p className="text-xs text-gray-500 dark:text-gray-400">© 2024 Universe Unlocked. All rights reserved.</p>
+            <nav className="flex gap-4 sm:gap-6">
+              <Link className="text-xs text-gray-500 hover:text-purple-600 dark:text-gray-400 dark:hover:text-purple-400" href="#">
+                Terms of Service
+              </Link>
+              <Link className="text-xs text-gray-500 hover:text-purple-600 dark:text-gray-400 dark:hover:text-purple-400" href="#">
+                Privacy
+              </Link>
+            </nav>
+          </div>
+        </footer>
       </div>
     </div>
   )

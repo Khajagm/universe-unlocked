@@ -42,10 +42,10 @@ const categories = {
 }
 
 const slideImages = [
-  "/placeholder.svg?height=800&width=1600&text=Stunning+Nebula",
-  "/placeholder.svg?height=800&width=1600&text=Majestic+Galaxy",
-  "/placeholder.svg?height=800&width=1600&text=Mysterious+Black+Hole",
-  "/placeholder.svg?height=800&width=1600&text=Dazzling+Supernova",
+  "/25th_gcenter.jpg?height=800&width=1600&text=Stunning+Nebula",
+  "/25th_m16.jpg?height=800&width=1600&text=Majestic+Galaxy",
+  "/25th_ngc7469.jpg?height=800&width=1600&text=Mysterious+Black+Hole",
+  "/25th_wr124.jpg?height=800&width=1600&text=Dazzling+Supernova",
 ]
 
 // Custom hook to manage theme
@@ -115,7 +115,7 @@ export default function LandingPage() {
           {slideImages.map((src, index) => (
             <Image
               key={src}
-              src={src || "/placeholder.svg"}
+              src={src || "/25th_gcenter.jpg"}
               alt={`Space Image ${index + 1}`}
               fill
               style={{
