@@ -1,12 +1,10 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowLeft, Play, Pause, SkipBack, Sun, Moon } from 'lucide-react'
-import { Switch } from "@/components/ui/switch"
-import { Slider } from "@/components/ui/slider"
+import { Header } from "@/components/Header"
+import { Footer } from "@/components/Footer"
+import { VideoPlayer } from "@/components/VideoPlayer"
 
 const useTheme = () => {
   const [isDarkMode, setIsDarkMode] = useState(false)
@@ -26,124 +24,13 @@ const useTheme = () => {
   return { isDarkMode, toggleTheme }
 }
 
-const VideoPlayer = () => {
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [currentTime, setCurrentTime] = useState(0)
-  const [duration, setDuration] = useState(0)
-  const videoRef = useRef<HTMLVideoElement>(null)
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-
-    const updateTime = () => setCurrentTime(video.currentTime)
-    const updateDuration = () => setDuration(video.duration)
-
-    video.addEventListener('timeupdate', updateTime)
-    video.addEventListener('loadedmetadata', updateDuration)
-    video.addEventListener('ended', () => setIsPlaying(false))
-
-    return () => {
-      video.removeEventListener('timeupdate', updateTime)
-      video.removeEventListener('loadedmetadata', updateDuration)
-      video.removeEventListener('ended', () => setIsPlaying(false))
-    }
-  }, [])
-
-  const togglePlay = () => {
-    const video = videoRef.current
-    if (!video) return
-
-    if (isPlaying) {
-      video.pause()
-    } else {
-      video.play()
-    }
-    setIsPlaying(!isPlaying)
-  }
-
-  const handleSliderChange = (value: number[]) => {
-    const video = videoRef.current
-    if (!video) return
-
-    video.currentTime = value[0]
-    setCurrentTime(value[0])
-  }
-
-  const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60)
-    const seconds = Math.floor(time % 60)
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`
-  }
-
-  const restart = () => {
-    const video = videoRef.current
-    if (!video) return
-
-    video.currentTime = 0
-    setCurrentTime(0)
-    if (!isPlaying) {
-      video.play()
-      setIsPlaying(true)
-    }
-  }
-
-  return (
-    <div className="w-full max-w-3xl">
-      <div className="relative aspect-video mb-4">
-        <video
-          ref={videoRef}
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sonify3_catseye_optical-sxWb56AelGKpcEbN4Rco3osuOdhMaH.mp4"
-          className="w-full h-full rounded-lg"
-          playsInline
-        />
-      </div>
-      <div className="flex items-center justify-between mb-2">
-        <Button onClick={togglePlay} variant="outline" size="icon" aria-label={isPlaying ? "Pause" : "Play"}>
-          {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-        </Button>
-        <Button onClick={restart} variant="outline" size="icon" aria-label="Restart">
-          <SkipBack className="h-4 w-4" />
-        </Button>
-        <span className="text-sm font-medium">
-          {formatTime(currentTime)} / {formatTime(duration)}
-        </span>
-      </div>
-      <Slider
-        value={[currentTime]}
-        max={duration}
-        step={0.1}
-        onValueChange={handleSliderChange}
-        aria-label="Video progress"
-      />
-    </div>
-  )
-}
-
-export default function CatsEyeNebulaSonification() {
+export default function CatsEyeNebulaSonificationPage() {
   const { isDarkMode, toggleTheme } = useTheme()
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
       <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
-        <header className="px-4 lg:px-6 h-14 flex items-center justify-between border-b border-gray-200 dark:border-gray-700">
-          <Link href="/explore/cats-eye-nebula" className="flex items-center text-purple-600 dark:text-purple-400">
-            <ArrowLeft className="h-6 w-6 mr-2" />
-            <span className="font-bold">Back to Cat's Eye Nebula</span>
-          </Link>
-          <div className="flex items-center space-x-2">
-            <Switch 
-              checked={isDarkMode} 
-              onCheckedChange={toggleTheme}
-              aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-            />
-            {isDarkMode ? (
-              <Moon className="h-4 w-4 text-purple-400" />
-            ) : (
-              <Sun className="h-4 w-4 text-purple-600" />
-            )}
-          </div>
-        </header>
+        <Header isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
         <main className="flex-1">
           <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
             <div className="container px-4 md:px-6">
@@ -179,19 +66,7 @@ export default function CatsEyeNebulaSonification() {
             </div>
           </section>
         </main>
-        <footer className="py-6 w-full border-t border-gray-200 dark:border-gray-700">
-          <div className="container px-4 md:px-6 flex flex-col sm:flex-row justify-between items-center">
-            <p className="text-xs text-gray-500 dark:text-gray-400">© 2024 Universe Unlocked. All rights reserved.</p>
-            <nav className="flex gap-4 sm:gap-6">
-              <Link className="text-xs text-gray-500 hover:text-purple-600 dark:text-gray-400 dark:hover:text-purple-400" href="#">
-                Terms of Service
-              </Link>
-              <Link className="text-xs text-gray-500 hover:text-purple-600 dark:text-gray-400 dark:hover:text-purple-400" href="#">
-                Privacy
-              </Link>
-            </nav>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </div>
   )
