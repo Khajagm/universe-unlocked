@@ -9,7 +9,7 @@ interface HeaderProps {
   toggleTheme: () => void
 }
 
-export function Header({ isDarkMode, toggleTheme }: HeaderProps) {
+export default function Header({ isDarkMode, toggleTheme }: HeaderProps) {
   return (
     <header className={`px-4 lg:px-6 h-14 flex items-center border-b ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
       <Link className="flex items-center justify-center" href="#">

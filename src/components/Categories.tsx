@@ -42,7 +42,7 @@ interface CategoriesProps {
   isDarkMode: boolean
 }
 
-export function Categories({ isDarkMode }: CategoriesProps) {
+export default function Categories({ isDarkMode }: CategoriesProps) {
   const [selectedCategory, setSelectedCategory] = useState("all")
 
   const filteredItems = contentItems.filter(item => 

@@ -21,11 +21,11 @@ const nebulaItems: NebulaItem[] = [
   // Add more nebulas here as needed
 ]
 
-interface CategoriesProps {
+interface CategoriesNebulasProps {
   isDarkMode: boolean
 }
 
-export default function CategoriesNebulas({ isDarkMode }: CategoriesProps) {
+export default function CategoriesNebulas({ isDarkMode }: CategoriesNebulasProps) {
   return (
     <section className={`w-full py-12 md:py-24 lg:py-32 ${isDarkMode ? "bg-gray-900" : "bg-white"}`}>
       <div className="container px-4 md:px-6">

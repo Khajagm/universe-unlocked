@@ -4,13 +4,10 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 
 const slideImages = [
-  "/placeholder.svg?height=800&width=1600&text=Stunning+Nebula",
-  "/placeholder.svg?height=800&width=1600&text=Majestic+Galaxy",
-  "/placeholder.svg?height=800&width=1600&text=Mysterious+Black+Hole",
-  "/placeholder.svg?height=800&width=1600&text=Dazzling+Supernova",
+  "/vercel.svg",
 ]
 
-export function Slideshow() {
+export default function Slideshow() {
   const [currentSlide, setCurrentSlide] = useState(0)
 
   useEffect(() => {
