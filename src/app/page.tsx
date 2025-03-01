@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
-import Slideshow from "@/components/Slideshow"
-import Categories from "@/components/Categories"
+import HomepageSlideshow from "@/components/HomepageSlideshow"
+import HomepageCategories from "@/components/HomepageCategories"
+import PageTransition from "@/components/PageTransition"
 
 // Custom hook to manage theme
 const useTheme = () => {
@@ -25,16 +26,18 @@ const useTheme = () => {
   return { isDarkMode, toggleTheme }
 }
 
-export default function LandingPage() {
+export default function HomePage() {
   const { isDarkMode, toggleTheme } = useTheme()
 
   return (
     <div className={`flex flex-col min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
       <Header isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
-      <main className="flex-1">
-        <Slideshow />
-        <Categories isDarkMode={isDarkMode} />
-      </main>
+      <PageTransition>
+        <main className="flex-1">
+          <HomepageSlideshow />
+          <HomepageCategories isDarkMode={isDarkMode} />
+        </main>
+      </PageTransition>
       <Footer isDarkMode={isDarkMode} />
     </div>
   )

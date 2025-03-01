@@ -1,51 +1,85 @@
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import { Globe } from "lucide-react"
+"use client"
 
-const slideshowImages = [
-  "/placeholder.svg?height=1080&width=1920&text=Nebula+1",
-  "/placeholder.svg?height=1080&width=1920&text=Nebula+2",
-  "/placeholder.svg?height=1080&width=1920&text=Nebula+3",
-  "/placeholder.svg?height=1080&width=1920&text=Nebula+4",
+import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { Button } from "@/components/ui/button"
+
+const slides = [
+  {
+    url: '/placeholder.svg?height=400&width=800',
+    alt: 'Cat\'s Eye Nebula',
+    caption: 'The mesmerizing Cat\'s Eye Nebula'
+  },
+  {
+    url: '/placeholder.svg?height=400&width=800',
+    alt: 'Ring Nebula',
+    caption: 'The iconic Ring Nebula'
+  },
+  {
+    url: '/placeholder.svg?height=400&width=800',
+    alt: 'Helix Nebula',
+    caption: 'The stunning Helix Nebula'
+  },
+  {
+    url: '/placeholder.svg?height=400&width=800',
+    alt: 'Butterfly Nebula',
+    caption: 'The beautiful Butterfly Nebula'
+  },
 ]
 
 export default function SlideshowNebulas() {
-  const [currentSlide, setCurrentSlide] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  const prevSlide = () => {
+    const isFirstSlide = currentIndex === 0
+    const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1
+    setCurrentIndex(newIndex)
+  }
+
+  const nextSlide = () => {
+    const isLastSlide = currentIndex === slides.length - 1
+    const newIndex = isLastSlide ? 0 : currentIndex + 1
+    setCurrentIndex(newIndex)
+  }
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % slideshowImages.length)
-    }, 5000) // Change slide every 5 seconds
-
-    return () => clearInterval(interval)
-  }, [])
+    const slideInterval = setInterval(() => {
+      nextSlide()
+    }, 5000)
+    return () => clearInterval(slideInterval)
+  }, [currentIndex])
 
   return (
-    <section className="relative w-full h-[60vh] overflow-hidden">
-      {slideshowImages.map((image, index) => (
+    <div className="relative w-full h-[400px] mb-8 overflow-hidden">
+      <div className="absolute inset-0 flex items-center justify-center">
         <Image
-          key={index}
-          src={image || "/placeholder.svg"}
-          alt={`Nebula ${index + 1}`}
+          src={slides[currentIndex].url || "/placeholder.svg"}
+          alt={slides[currentIndex].alt}
           fill
-          style={{
-            objectFit: "cover",
-            opacity: index === currentSlide ? 1 : 0,
-            transition: "opacity 1s ease-in-out",
-          }}
+          style={{ objectFit: 'contain' }}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-      ))}
-      <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white">
-        <Globe className="h-16 w-16 mb-4 text-purple-400" />
-        <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-purple-400 mb-4">
-          Planetary Nebulas
-        </h1>
-        <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl text-center px-4">
-          Witness the beauty and complexity of planetary nebulas, the remnants of dying stars that create some of the
-          most stunning celestial objects in our universe.
-        </p>
       </div>
-    </section>
+      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <p className="text-white text-2xl font-bold text-center px-4">{slides[currentIndex].caption}</p>
+      </div>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 z-10"
+        onClick={prevSlide}
+      >
+        <ChevronLeft className="h-6 w-6" />
+      </Button>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 z-10"
+        onClick={nextSlide}
+      >
+        <ChevronRight className="h-6 w-6" />
+      </Button>
+    </div>
   )
 }
-

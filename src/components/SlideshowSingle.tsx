@@ -1,57 +1,39 @@
 "use client"
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from "@/components/ui/button"
+import { Slide } from '@/lib/nebulaSlides'
 
-const slides = [
-  {
-    url: '/placeholder.svg?height=400&width=800',
-    alt: 'Cat\'s Eye Nebula',
-    caption: 'The mesmerizing Cat\'s Eye Nebula'
-  },
-  {
-    url: '/placeholder.svg?height=400&width=800',
-    alt: 'Ring Nebula',
-    caption: 'The iconic Ring Nebula'
-  },
-  {
-    url: '/placeholder.svg?height=400&width=800',
-    alt: 'Helix Nebula',
-    caption: 'The stunning Helix Nebula'
-  },
-  {
-    url: '/placeholder.svg?height=400&width=800',
-    alt: 'Butterfly Nebula',
-    caption: 'The beautiful Butterfly Nebula'
-  },
-]
+interface SlideshowSingleProps {
+  slides: Slide[];
+}
 
-export default function SlideshowSingle() {
+export default function SlideshowSingle({ slides }: SlideshowSingleProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const prevSlide = useCallback(() => {
+  const prevSlide = () => {
     const isFirstSlide = currentIndex === 0
     const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1
     setCurrentIndex(newIndex)
-  }, [currentIndex])
+  }
 
-  const nextSlide = useCallback(() => {
+  const nextSlide = () => {
     const isLastSlide = currentIndex === slides.length - 1
     const newIndex = isLastSlide ? 0 : currentIndex + 1
     setCurrentIndex(newIndex)
-  }, [currentIndex])
+  }
 
   useEffect(() => {
     const slideInterval = setInterval(() => {
       nextSlide()
     }, 5000)
     return () => clearInterval(slideInterval)
-  }, [nextSlide])
+  }, [currentIndex, nextSlide]) // Added nextSlide to dependencies
 
   return (
-    <div className="relative w-full h-[400px] mb-8 overflow-hidden">
+    <div className="relative w-full h-[400px] mb-8">
       <div className="absolute inset-0 flex items-center justify-center">
         <Image
           src={slides[currentIndex].url || "/placeholder.svg"}

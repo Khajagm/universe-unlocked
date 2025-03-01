@@ -5,7 +5,11 @@ import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
 import { Play, Pause, SkipBack } from 'lucide-react'
 
-export const VideoPlayer = () => {
+interface VideoPlayerProps {
+  videoSrc: string
+}
+
+export default function VideoPlayer({ videoSrc }: VideoPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
@@ -72,7 +76,7 @@ export const VideoPlayer = () => {
       <div className="relative aspect-video mb-4">
         <video
           ref={videoRef}
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sonify3_catseye_optical-sxWb56AelGKpcEbN4Rco3osuOdhMaH.mp4"
+          src={videoSrc}
           className="w-full h-full rounded-lg"
           playsInline
         />
