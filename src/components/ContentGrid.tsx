@@ -1,8 +1,11 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import type { ContentItem } from "@/lib/contentItems"
+import { useTheme } from "@/contexts/ThemeContext"
 
 interface ContentGridProps {
   items: ContentItem[]
@@ -11,7 +14,11 @@ interface ContentGridProps {
   isDarkMode?: boolean
 }
 
-export function ContentGrid({ items, type, object, isDarkMode = false }: ContentGridProps) {
+export function ContentGrid({ items, type, object, isDarkMode: propIsDarkMode }: ContentGridProps) {
+  // Use the theme context, but allow prop override for backward compatibility
+  const { isDarkMode: contextIsDarkMode } = useTheme()
+  const isDarkMode = propIsDarkMode !== undefined ? propIsDarkMode : contextIsDarkMode
+
   console.log("ContentGrid received items:", items.length, "for type:", type)
 
   // If we have no items, show a message

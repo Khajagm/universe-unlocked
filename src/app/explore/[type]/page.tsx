@@ -1,5 +1,6 @@
 "use client"
 
+import { useTheme } from "@/contexts/ThemeContext"
 import { useState, useEffect } from "react"
 import { useParams } from "next/navigation"
 import Header from "@/components/Header"
@@ -11,27 +12,11 @@ import contentItems from "@/lib/contentItems"
 import contentTypes from "@/lib/contentTypes"
 import { contentTypeSlides } from "@/lib/slideshowImages"
 
-const useTheme = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false)
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem("theme")
-    setIsDarkMode(storedTheme === "dark")
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem("theme", isDarkMode ? "dark" : "light")
-    document.documentElement.classList.toggle("dark", isDarkMode)
-  }, [isDarkMode])
-
-  const toggleTheme = () => setIsDarkMode(!isDarkMode)
-
-  return { isDarkMode, toggleTheme }
-}
 
 export default function ExplorePage() {
   const params = useParams()
   const type = params.type as string
+  // Get theme from context instead of local state
   const { isDarkMode, toggleTheme } = useTheme()
 
   // Check if the type is a content type or a category

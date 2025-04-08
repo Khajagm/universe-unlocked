@@ -7,9 +7,7 @@ import Footer from "@/components/Footer"
 import ContentPage from "@/components/ContentPage"
 import PageTransition from "@/components/PageTransition"
 import { getSpecificContent } from "@/lib/dataUtils"
-import { useTheme } from "@/hooks/useTheme"
-
-// ... rest of your component code
+import { useTheme } from "@/contexts/ThemeContext"
 
 export default function SpecificContentPage() {
   const params = useParams()
