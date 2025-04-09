@@ -76,7 +76,7 @@ export default function Home() {
           </PageTransition>
         </div>
       </div>
-      <Footer />
+      <Footer isDarkMode={isDarkMode} />
     </div>
   )
 }
