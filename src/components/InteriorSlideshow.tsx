@@ -53,8 +53,10 @@ export default function InteriorSlideshow({
 
   if (!slides || slides.length === 0) {
     return (
-      <div className="relative w-full h-[600px] bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
-        <p className="text-gray-500 dark:text-gray-400">No slides available</p>
+      <div
+        className={`relative w-full h-[600px] ${isDarkMode ? "bg-gray-800 text-gray-400" : "bg-gray-200 text-gray-500"} flex items-center justify-center`}
+      >
+        <p>No slides available</p>
       </div>
     )
   }
@@ -139,4 +141,3 @@ export default function InteriorSlideshow({
     </div>
   )
 }
-
