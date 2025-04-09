@@ -52,7 +52,7 @@ export default function Home() {
 
   return (
     <div className={`flex flex-col min-h-screen ${isDarkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}>
-      <Header isDarkMode={isDarkMode} toggleTheme={toggleTheme} isNavOpen={isNavOpen} toggleNav={toggleNav} />
+      <Header isDarkMode={isDarkMode} toggleTheme={toggleTheme} toggleNav={toggleNav} />
       <div className="flex flex-grow pt-14">
         {" "}
         {/* Add pt-14 to account for fixed header */}

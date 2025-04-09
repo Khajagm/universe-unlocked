@@ -18,7 +18,7 @@ export default function ObjectPage() {
 
   return (
     <div className={`flex flex-col min-h-screen ${isDarkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}>
-      <Header isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+      <Header isDarkMode={isDarkMode} toggleTheme={toggleTheme} toggleNav={toggleNav} />
       <PageTransition>
         <main className="flex-1">
           <h1 className="text-3xl font-bold text-center my-8">{object.charAt(0).toUpperCase() + object.slice(1).replace('-', ' ')}</h1>

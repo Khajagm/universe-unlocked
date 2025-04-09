@@ -5,11 +5,10 @@ import { Rocket, Sun, Moon } from "lucide-react"
 interface HeaderProps {
   isDarkMode: boolean
   toggleTheme: () => void
-  isNavOpen?: boolean
   toggleNav?: () => void
 }
 
-export default function Header({ isDarkMode, toggleTheme, isNavOpen, toggleNav }: HeaderProps) {
+export default function Header({ isDarkMode, toggleTheme, toggleNav }: HeaderProps) {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 px-4 lg:px-6 h-14 flex items-center border-b ${isDarkMode ? "border-gray-700" : "border-gray-200"} ${isDarkMode ? "bg-gray-900" : "bg-white"}`}
