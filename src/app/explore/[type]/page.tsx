@@ -50,7 +50,7 @@ export default function ExplorePage() {
 
   return (
     <div className={`flex flex-col min-h-screen ${isDarkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}>
-      <Header isDarkMode={isDarkMode} toggleTheme={toggleTheme} } />
+      <Header isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
       <PageTransition>
         <main className="flex-1">
           <InteriorSlideshow slides={contentTypeSlides[type] || []} isDarkMode={isDarkMode} />
