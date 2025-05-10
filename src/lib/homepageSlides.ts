@@ -7,17 +7,17 @@ interface HomepageSlide {
   const homepageSlides: HomepageSlide[] = [
     {
       id: "slide1",
-      src: "/vercel.svg",
+      src: "/assets/ar_catseye.jpg",
       alt: "Space Image 1"
     },
     {
       id: "slide2",
-      src: "/placeholder.svg",
+      src: "/assets/sonify_casa_life.jpg",
       alt: "Space Image 2"
     },
     {
       id: "slide3",
-      src: "/placeholder.svg",
+      src: "/assets/sgra_radio.jpg",
       alt: "Space Image 3"
     }
   ]

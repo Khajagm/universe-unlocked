@@ -34,7 +34,10 @@ export default function Home() {
           .join(" "),
       description: typeInfo?.description || `Explore ${items.length} items in ${category}`,
       href: `/explore/${category}`,
-      imageSrc: items[0]?.imageSrc || `/placeholder.svg?height=200&width=400&text=${encodeURIComponent(category)}`,
+      imageSrc: 
+        typeInfo?.imageSrc || // First try to use the image from contentTypes
+        items[0]?.imageSrc || // Fall back to the first item's image
+        `/placeholder.svg?height=200&width=400&text=${encodeURIComponent(category)}`, // Last resort is placeholder
       icon: typeInfo?.icon,
     }
   })
@@ -56,7 +59,10 @@ export default function Home() {
           .join(" "),
       description: typeInfo?.description || `Explore ${items.length} items in ${contentType}`,
       href: `/explore/${contentType}`,
-      imageSrc: items[0]?.imageSrc || `/placeholder.svg?height=200&width=400&text=${encodeURIComponent(contentType)}`,
+      imageSrc: 
+        typeInfo?.imageSrc || // First try to use the image from contentTypes
+        items[0]?.imageSrc || // Fall back to the first item's image
+        `/assets/ar_catseye.jpg?height=200&width=400&text=${encodeURIComponent(contentType)}`, // Last resort is placeholder
       icon: typeInfo?.icon,
     }
   })
