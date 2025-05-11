@@ -6,15 +6,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { Button } from "@/components/ui/button"
 import type { ContentItem } from "@/lib/contentItems"
 import { useTheme } from "@/contexts/ThemeContext"
+import contentTypes from "@/lib/contentTypes"
+import { FileIcon } from "lucide-react" // Import a default icon as fallback
 
-interface ContentGridProps {
-  items: ContentItem[]
+export interface ContentGridProps {
+  items: ContentItem[] | any[]
   type: string
   object?: string
+  useIcons?: boolean
   isDarkMode?: boolean
 }
 
-export function ContentGrid({ items, type, object, isDarkMode: propIsDarkMode }: ContentGridProps) {
+export function ContentGrid({ items, type, object, useIcons = false, isDarkMode: propIsDarkMode }: ContentGridProps) {
   // Use the theme context, but allow prop override for backward compatibility
   const { isDarkMode: contextIsDarkMode } = useTheme()
   const isDarkMode = propIsDarkMode !== undefined ? propIsDarkMode : contextIsDarkMode
@@ -102,19 +105,31 @@ export function ContentGrid({ items, type, object, isDarkMode: propIsDarkMode }:
           ? item.externalURL
           : `/explore/${type}/${item.celestialObject}/${item.contentType}/${item.id}`
 
+        // Get the content type info to access the icon
+        const contentTypeInfo = contentTypes[item.contentType]
+        const IconComponent = contentTypeInfo?.icon || FileIcon // Use FileIcon as fallback
+
         return (
           <Card
             key={item.id}
             className={`overflow-hidden ${isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"}`}
           >
-            <div className="relative h-48">
-              <Image
-                src={item.imageSrc || `/placeholder.svg?height=200&width=400&text=${encodeURIComponent(item.title)}`}
-                alt={item.title}
-                fill
-                style={{ objectFit: "cover" }}
-              />
-            </div>
+            {useIcons ? (
+              // Always use icons when useIcons is true
+              <div className={`flex items-center justify-center h-48 ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}>
+                <IconComponent className="h-24 w-24 text-purple-400" />
+              </div>
+            ) : (
+              // Only use images when useIcons is false
+              <div className="relative h-48">
+                <Image
+                  src={item.imageSrc || `/placeholder.svg?height=200&width=400&text=${encodeURIComponent(item.title)}`}
+                  alt={item.title}
+                  fill
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+            )}
             <CardHeader>
               <CardTitle className={isDarkMode ? "text-white" : "text-gray-900"}>{item.title}</CardTitle>
             </CardHeader>
@@ -134,4 +149,3 @@ export function ContentGrid({ items, type, object, isDarkMode: propIsDarkMode }:
     </div>
   )
 }
-

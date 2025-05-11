@@ -118,7 +118,7 @@ const contentItems: ContentItem[] = [
     id: "messier-51-nebula-3d-model", 
     title: "Messier 51 3D Model", 
     description: "Download Messier 51's stunning spiral structure to explore or 3D print your own Whirlpool Galaxy.",
-    modelSrc: "/assets/models/M51_ULS1_All_Edges_On.stl, /assets/models/M51_ULS1_All_Edges_On.obj", // Added path prefix
+    modelSrc: "/assets/M51_ULS1_All_Edges_On.obj", // Added path prefix
     celestialObject: "messier-51",
     category: "galaxies",
     contentType: "3d-models"
