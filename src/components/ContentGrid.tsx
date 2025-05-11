@@ -10,7 +10,7 @@ import contentTypes from "@/lib/contentTypes"
 import { FileIcon } from "lucide-react" // Import a default icon as fallback
 
 export interface ContentGridProps {
-  items: ContentItem[] | any[]
+  items: ContentItem[]
   type: string
   object?: string
   useIcons?: boolean
