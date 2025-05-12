@@ -7,7 +7,7 @@ interface HomepageSlide {
   const homepageSlides: HomepageSlide[] = [
     {
       id: "slide1",
-      src: "https://fwaw7h413ibzbblr.public.blob.vercel-storage.com/assets/m/ar_catseye.jpg",
+      src: "https://fwaw7h413ibzbblr.public.blob.vercel-storage.com/assets/ar_catseye.jpg",
       alt: "Space Image 1"
     },
     {
