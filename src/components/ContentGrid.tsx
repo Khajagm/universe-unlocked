@@ -138,9 +138,8 @@ export function ContentGrid({ items, type, object, useIcons = false, isDarkMode:
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {items.map((item) => {
-        const href = item.externalURL
-          ? item.externalURL
-          : `/explore/${type}/${item.celestialObject}/${item.contentType}/${item.id}`
+        // Always use the internal link, never the external URL directly
+        const href = `/explore/${type}/${item.celestialObject}/${item.contentType}/${item.id}`
 
         // Get the content type info to access the icon and title
         const contentTypeInfo = contentTypes[item.contentType]
