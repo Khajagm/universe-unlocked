@@ -22,6 +22,11 @@ export default function TypePage() {
   const params = useParams()
   const type = params.type as string
 
+  // Get items based on whether this is a category or content type
+  const categoryItems = contentItems.filter((item) => item.category === type)
+  const contentTypeItems = contentItems.filter((item) => item.contentType === type)
+  const items = categoryItems.length > 0 ? categoryItems : contentTypeItems
+
   // Get content type information
   const contentType = contentTypes[type]
 
@@ -33,9 +38,6 @@ export default function TypePage() {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ")
   const description = contentType?.description || `Explore ${type}`
-
-  // Get items for this type
-  const items = contentItems.filter((item) => item.category === type || item.contentType === type)
 
   // Example slides - in a real app, you might fetch these from an API or database
   // For now, we'll use the fallback logic
@@ -56,7 +58,7 @@ export default function TypePage() {
               <div className="container mx-auto px-4 py-8">
                 <h1 className="text-3xl font-bold mb-4">{title}</h1>
                 <p className="mb-8">{description}</p>
-                <ContentGrid items={items} type={type} />
+                <ContentGrid items={items} type={type} useIcons={true} />
               </div>
             </main>
           </PageTransition>
