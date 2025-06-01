@@ -7,6 +7,7 @@ import Image from "next/image"
 import { X, ChevronLeft, ChevronRight } from "lucide-react"
 import { useTheme } from "@/contexts/ThemeContext"
 import { Button } from "@/components/ui/button"
+import { getAssetUrl } from "@/lib/assetUtils"
 
 interface ImageItem {
   src: string
@@ -61,7 +62,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
             onClick={() => openImage(index)}
           >
             <Image
-              src={image.src || "/placeholder.svg"}
+              src={getAssetUrl(image.src) || "/placeholder.svg"}
               alt={image.alt}
               fill
               style={{ objectFit: "cover" }}
@@ -86,14 +87,15 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
           tabIndex={0}
         >
           <div className="relative max-w-4xl max-h-[90vh] w-full" onClick={(e) => e.stopPropagation()}>
-            <div className="relative h-full">
-              <Image
-                src={images[selectedImage].src || "/placeholder.svg"}
+            <div className="relative h-full flex items-center justify-center">
+              <img
+                src={getAssetUrl(images[selectedImage].src) || "/placeholder.svg"}
                 alt={images[selectedImage].alt}
-                fill
-                style={{ objectFit: "contain" }}
-                sizes="100vw"
-                priority
+                className="max-w-full max-h-[90vh] object-contain"
+                onError={(e) => {
+                  console.error("Image failed to load:", getAssetUrl(images[selectedImage].src))
+                  e.currentTarget.src = "/placeholder.svg"
+                }}
               />
             </div>
 
@@ -113,25 +115,29 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
               <X className="h-6 w-6" />
             </Button>
 
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 rounded-full"
-              onClick={prevImage}
-              aria-label="Previous image"
-            >
-              <ChevronLeft className="h-6 w-6" />
-            </Button>
+            {images.length > 1 && (
+              <>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 rounded-full"
+                  onClick={prevImage}
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </Button>
 
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 rounded-full"
-              onClick={nextImage}
-              aria-label="Next image"
-            >
-              <ChevronRight className="h-6 w-6" />
-            </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 rounded-full"
+                  onClick={nextImage}
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </Button>
+              </>
+            )}
           </div>
         </div>
       )}

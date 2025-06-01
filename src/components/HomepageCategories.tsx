@@ -36,7 +36,7 @@ export default function HomepageCategories({ title, items, isDarkMode }: Homepag
                 <Image src={item.imageSrc || "/placeholder.svg"} alt={item.title} fill style={{ objectFit: "cover" }} />
                 {item.icon && (
                   <div className="absolute top-4 right-4 bg-purple-600 p-2 rounded-full">
-                    {<item.icon className="h-6 w-6 text-white" />}
+                    <item.icon className="h-6 w-6 text-white" />
                   </div>
                 )}
               </div>

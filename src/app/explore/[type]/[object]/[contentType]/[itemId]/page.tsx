@@ -6,12 +6,15 @@ import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import Navigation from "@/components/Navigation"
 import PageTransition from "@/components/PageTransition"
+import InteriorSlideshow from "@/components/InteriorSlideshow"
 import { useTheme } from "@/contexts/ThemeContext"
 import contentItems from "@/lib/contentItems"
 import StoryContent from "@/components/content/StoryContent"
 import VideoContent from "@/components/content/VideoContent"
 import ImageContent from "@/components/content/ImageContent"
 import ModelContent from "@/components/content/ModelContent"
+import { getContentItemSlidesWithFallback } from "@/lib/slideshowUtils"
+import type { SlideImage } from "@/lib/slideshowImages"
 
 export default function ItemPage() {
   const { isDarkMode, toggleTheme } = useTheme()
@@ -27,12 +30,8 @@ export default function ItemPage() {
   // Find the content item
   const item = contentItems.find((item) => item.id === itemId)
 
-  // Format display names
-  const formatName = (name: string) =>
-    name
-      .split("-")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ")
+  // Get slides for this content item
+  const slides: SlideImage[] = getContentItemSlidesWithFallback(type, object, contentType, itemId)
 
   // Render content based on content type
   const renderContent = () => {
@@ -68,20 +67,18 @@ export default function ItemPage() {
         <div className="flex-grow">
           <PageTransition>
             <main className="w-full">
+              {/* Add the slideshow component */}
+              {slides.length > 0 && <InteriorSlideshow slides={slides} isDarkMode={isDarkMode} />}
+
               <div className="container mx-auto px-4 py-8">
                 <div className="mb-6">
-                  <h1 className="text-3xl font-bold">{item?.title || "Content Not Found"}</h1>
-                  <div className="flex flex-wrap gap-2 mt-2 text-sm">
-                    <span className={`px-2 py-1 rounded ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}>
-                      {formatName(type)}
-                    </span>
-                    <span className={`px-2 py-1 rounded ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}>
-                      {formatName(object)}
-                    </span>
-                    <span className={`px-2 py-1 rounded ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}>
-                      {formatName(contentType)}
-                    </span>
-                  </div>
+                  <h1 className="text-3xl font-bold mb-4">{item?.title || "Content Not Found"}</h1>
+                  {/* Add description under the title */}
+                  {item?.description && (
+                    <p className={`text-lg leading-relaxed ${isDarkMode ? "text-gray-300" : "text-gray-600"}`}>
+                      {item.description}
+                    </p>
+                  )}
                 </div>
 
                 {renderContent()}

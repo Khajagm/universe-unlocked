@@ -35,9 +35,7 @@ export default function HomepageSlideshow() {
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
             Explore the Cosmos Like Never Before
           </h1>
-          <p className="text-xl sm:text-2xl text-gray-200 mb-8">
-            Embark on a journey through space and time with Universe Unlocked. Discover the wonders of our universe through interactive 3D models, stunning videos, cosmic sonification, and captivating stories.
-          </p>
+          <p className="text-xl sm:text-2xl text-gray-200 mb-8">Universe Unlocked transforms complex scientific concepts into accessible, inspiring experiences, allowing each individual to truly connect with the mysteries of the Universe and discover its vast beauty on their own terms.</p>
         </div>
       </div>
     </section>

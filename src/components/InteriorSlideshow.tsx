@@ -95,24 +95,28 @@ export default function InteriorSlideshow({
       </div>
 
       {/* Navigation arrows */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
-        onClick={prevSlide}
-        aria-label="Previous slide"
-      >
-        <ChevronLeft className="h-6 w-6" />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
-        onClick={nextSlide}
-        aria-label="Next slide"
-      >
-        <ChevronRight className="h-6 w-6" />
-      </Button>
+      {slides.length > 1 && (
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
+          onClick={prevSlide}
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </Button>
+      )}
+      {slides.length > 1 && (
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
+          onClick={nextSlide}
+          aria-label="Next slide"
+        >
+          <ChevronRight className="h-6 w-6" />
+        </Button>
+      )}
 
       {/* Play/Pause button */}
       <Button
@@ -126,18 +130,20 @@ export default function InteriorSlideshow({
       </Button>
 
       {/* Dot indicators */}
-      <div className="absolute bottom-16 left-0 right-0 flex items-center justify-center gap-2">
-        {slides.map((_, slideIndex) => (
-          <div
-            key={slideIndex}
-            onClick={() => goToSlide(slideIndex)}
-            className={`cursor-pointer w-3 h-3 rounded-full ${
-              slideIndex === currentIndex ? "bg-white" : "bg-white bg-opacity-50 hover:bg-opacity-75"
-            } transition-all`}
-            aria-label={`Go to slide ${slideIndex + 1}`}
-          ></div>
-        ))}
-      </div>
+      {slides.length > 1 && (
+        <div className="absolute bottom-16 left-0 right-0 flex items-center justify-center gap-2">
+          {slides.map((_, slideIndex) => (
+            <div
+              key={slideIndex}
+              onClick={() => goToSlide(slideIndex)}
+              className={`cursor-pointer w-3 h-3 rounded-full ${
+                slideIndex === currentIndex ? "bg-white" : "bg-white bg-opacity-50 hover:bg-opacity-75"
+              } transition-all`}
+              aria-label={`Go to slide ${slideIndex + 1}`}
+            ></div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

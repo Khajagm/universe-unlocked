@@ -6,6 +6,7 @@ import Footer from "@/components/Footer"
 import HomepageSlideshow from "@/components/HomepageSlideshow"
 import HomepageCategories from "@/components/HomepageCategories"
 import Navigation from "@/components/Navigation"
+import WelcomeDrawer from "@/components/WelcomeDrawer"
 import contentItems from "@/lib/contentItems"
 import { getUniqueCategories } from "@/lib/dataUtils"
 import PageTransition from "@/components/PageTransition"
@@ -34,7 +35,7 @@ export default function Home() {
           .join(" "),
       description: typeInfo?.description || `Explore ${items.length} items in ${category}`,
       href: `/explore/${category}`,
-      imageSrc: 
+      imageSrc:
         typeInfo?.imageSrc || // First try to use the image from contentTypes
         items[0]?.imageSrc || // Fall back to the first item's image
         `/placeholder.svg?height=200&width=400&text=${encodeURIComponent(category)}`, // Last resort is placeholder
@@ -59,7 +60,7 @@ export default function Home() {
           .join(" "),
       description: typeInfo?.description || `Explore ${items.length} items in ${contentType}`,
       href: `/explore/${contentType}`,
-      imageSrc: 
+      imageSrc:
         typeInfo?.imageSrc || // First try to use the image from contentTypes
         items[0]?.imageSrc || // Fall back to the first item's image
         `/assets/ar_catseye.jpg?height=200&width=400&text=${encodeURIComponent(contentType)}`, // Last resort is placeholder
@@ -75,7 +76,11 @@ export default function Home() {
         <div className="flex-grow">
           <PageTransition>
             <main className="w-full">
-              <HomepageSlideshow />
+              {/* Slideshow with Welcome Drawer */}
+              <div className="relative">
+                <HomepageSlideshow />
+                <WelcomeDrawer />
+              </div>
               <HomepageCategories title="Explore by Category" items={categoryItems} isDarkMode={isDarkMode} />
               <HomepageCategories title="Explore by Content Type" items={contentTypeItems} isDarkMode={isDarkMode} />
             </main>

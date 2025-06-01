@@ -1,18 +1,16 @@
 import type { SlideImage } from "@/lib/slideshowImages"
 import contentTypes from "@/lib/contentTypes"
 import contentItems from "@/lib/contentItems"
+import { getCelestialObjectById } from "@/lib/celestialObjects"
+import { getAssetUrl } from "@/lib/assetUtils"
 
 /**
  * Creates a fallback slide from an image source
- * @param imageSrc The image source URL
- * @param title Optional title for the slide caption
- * @param altText Optional alt text for accessibility
- * @returns An array with a single slide object
  */
 export function createFallbackSlide(imageSrc: string, title?: string, altText?: string): SlideImage[] {
   return [
     {
-      src: imageSrc,
+      src: getAssetUrl(imageSrc),
       alt: altText || title || "Image",
       caption: title || "Image",
     },
@@ -21,9 +19,6 @@ export function createFallbackSlide(imageSrc: string, title?: string, altText?: 
 
 /**
  * Gets slides for a specific type, with fallback to contentTypes image
- * @param type The content type
- * @param slides The existing slides array (if any)
- * @returns Slides array with fallback if needed
  */
 export function getSlidesWithFallback(type: string, slides?: SlideImage[]): SlideImage[] {
   // If we have slides, use them
@@ -47,15 +42,21 @@ export function getSlidesWithFallback(type: string, slides?: SlideImage[]): Slid
 
 /**
  * Gets slides for a specific type and object, with fallbacks
- * @param type The category or content type
- * @param object The celestial object
- * @param slides The existing slides array (if any)
- * @returns Slides array with fallback if needed
  */
 export function getObjectSlidesWithFallback(type: string, object: string, slides?: SlideImage[]): SlideImage[] {
   // If we have slides, use them
   if (slides && slides.length > 0) {
     return slides
+  }
+
+  // Try to get fallback from celestialObjects
+  const celestialObject = getCelestialObjectById(object)
+  if (celestialObject?.imageSrc) {
+    return createFallbackSlide(
+      celestialObject.imageSrc,
+      celestialObject.name,
+      celestialObject.altText || `Image of ${celestialObject.name}`,
+    )
   }
 
   // Find matching content items for this object
@@ -73,5 +74,62 @@ export function getObjectSlidesWithFallback(type: string, object: string, slides
   }
 
   // Fall back to content type image
+  return getSlidesWithFallback(type)
+}
+
+/**
+ * Gets slides for a specific content item, with fallbacks
+ */
+export function getContentItemSlidesWithFallback(
+  type: string,
+  object: string,
+  contentType: string,
+  itemId: string,
+  slides?: SlideImage[],
+): SlideImage[] {
+  // If we have slides, use them
+  if (slides && slides.length > 0) {
+    return slides
+  }
+
+  // Try to get the specific content item
+  const contentItem = contentItems.find(
+    (item) =>
+      item.id === itemId &&
+      item.celestialObject === object &&
+      (item.category === type || item.contentType === type) &&
+      item.contentType === contentType,
+  )
+
+  // If we have a content item with an image, use it
+  if (contentItem?.imageSrc) {
+    return createFallbackSlide(
+      contentItem.imageSrc,
+      contentItem.title,
+      contentItem.altText || `Image of ${contentItem.title}`,
+    )
+  }
+
+  // Try to get fallback from celestialObjects
+  const celestialObject = getCelestialObjectById(object)
+  if (celestialObject?.imageSrc) {
+    return createFallbackSlide(
+      celestialObject.imageSrc,
+      celestialObject.name,
+      celestialObject.altText || `Image of ${celestialObject.name}`,
+    )
+  }
+
+  // Fall back to content type image
+  const contentTypeInfo = contentTypes[contentType]
+  if (contentTypeInfo?.imageSrc) {
+    return createFallbackSlide(
+      contentTypeInfo.imageSrc,
+      contentTypeInfo.title,
+      contentTypeInfo.altText || `Image of ${contentTypeInfo.title}`,
+    )
+  }
+
+  // Last resort: fall back to category/type image
   return getSlidesWithFallback(type)
 }
