@@ -2,7 +2,6 @@
 
 import Image from "next/image"
 import MediaPlayer from "@/components/MediaPlayer"
-import { useTheme } from "@/contexts/ThemeContext"
 import type { ContentItem } from "@/lib/contentItems"
 
 interface StoryContentProps {
@@ -10,8 +9,6 @@ interface StoryContentProps {
 }
 
 export default function StoryContent({ item }: StoryContentProps) {
-  const { isDarkMode } = useTheme()
-
   // Check if the audio source is actually an MP4 file (likely a video)
   const isVideoAudio = item.audioSrc && item.audioSrc.toLowerCase().endsWith(".mp4")
 

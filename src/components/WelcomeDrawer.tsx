@@ -8,7 +8,6 @@ import { useTheme } from "@/contexts/ThemeContext"
 export default function WelcomeDrawer() {
   const { isDarkMode } = useTheme()
   const [isVisible, setIsVisible] = useState(false)
-  const [hasAnimatedIn, setHasAnimatedIn] = useState(false)
 
   useEffect(() => {
     // Check if user has visited before
@@ -18,7 +17,6 @@ export default function WelcomeDrawer() {
       // Show drawer after a short delay
       const timer = setTimeout(() => {
         setIsVisible(true)
-        setHasAnimatedIn(true)
       }, 2500) // 2.5 second delay after page load
 
       return () => clearTimeout(timer)
@@ -101,10 +99,11 @@ export default function WelcomeDrawer() {
                   <p
                     className={`text-base md:text-lg leading-relaxed ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}
                   >
-                    Embark on an adventure that allows you to explore the cosmos in your own way. You'll choose how you
-                    want to experience the blackholes, stars, and galaxies. Will you soar through nebulae on a wave of
-                    sound, or will you sculpt the jets of a black hole with your hands using 3D-printed models? You are
-                    the navigator, and together, we'll uncover the mysteries of the cosmos one decision at a time.
+                    Embark on an adventure that allows you to explore the cosmos in your own way. You&apos;ll choose how
+                    you want to experience the blackholes, stars, and galaxies. Will you soar through nebulae on a wave
+                    of sound, or will you sculpt the jets of a black hole with your hands using 3D-printed models? You
+                    are the navigator, and together, we&apos;ll uncover the mysteries of the cosmos one decision at a
+                    time.
                   </p>
                   <p
                     className={`text-lg md:text-xl font-semibold mt-3 ${isDarkMode ? "text-purple-400" : "text-purple-600"}`}
