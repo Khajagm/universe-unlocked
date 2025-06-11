@@ -122,6 +122,7 @@ The application uses Next.js App Router with dynamic routes:
 
 1. **Clone the repository**:
 
+
 2. **Install dependencies**:
    \`\`\`bash
    npm install
