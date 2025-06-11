@@ -88,9 +88,11 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
         >
           <div className="relative max-w-4xl max-h-[90vh] w-full" onClick={(e) => e.stopPropagation()}>
             <div className="relative h-full flex items-center justify-center">
-              <img
+              <Image
                 src={getAssetUrl(images[selectedImage].src) || "/placeholder.svg"}
                 alt={images[selectedImage].alt}
+                width={800}
+                height={600}
                 className="max-w-full max-h-[90vh] object-contain"
                 onError={(e) => {
                   console.error("Image failed to load:", getAssetUrl(images[selectedImage].src))

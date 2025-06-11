@@ -3,6 +3,7 @@
 import { useTheme } from "@/contexts/ThemeContext"
 import { Button } from "@/components/ui/button"
 import { Download, FileType, ExternalLink, CuboidIcon as Cube } from "lucide-react"
+import Image from "next/image"
 
 interface ModelViewerProps {
   src?: string
@@ -136,10 +137,11 @@ export default function ModelViewer({ src, alt = "3D Model", imageSrc, externalU
           {/* Preview image if available */}
           {imageSrc ? (
             <div className="relative h-48 w-full mb-6 rounded-lg overflow-hidden">
-              <img
+              <Image
                 src={imageSrc || "/placeholder.svg"}
                 alt={`Preview of ${alt}`}
-                className="w-full h-full object-contain"
+                fill
+                style={{ objectFit: "contain" }}
               />
             </div>
           ) : (
