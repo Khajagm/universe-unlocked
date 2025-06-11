@@ -121,10 +121,7 @@ The application uses Next.js App Router with dynamic routes:
 ### Installation Steps
 
 1. **Clone the repository**:
-   \`\`\`bash
-   git clone https://github.com/your-username/universe-unlocked.git
-   cd universe-unlocked
-   \`\`\`
+   
 
 2. **Install dependencies**:
    \`\`\`bash
