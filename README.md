@@ -122,7 +122,7 @@ The application uses Next.js App Router with dynamic routes:
 
 1. **Clone the repository**:
    \`\`\`bash
-   git clone https://github.com/universe-unlocked.git
+   git clone https://github.com/your-username/universe-unlocked.git
    cd universe-unlocked
    \`\`\`
 
